@@ -24,19 +24,20 @@ if st.session_state.page == "start":
     st.markdown("<h1 style='text-align: center;'>单词大闯关 🎮</h1>", unsafe_allow_html=True)
     if st.button("开始游戏"):
         st.session_state.page = "stage1"
-        st.experimental_rerun()
+        st.rerun()
 
 # **第一关：单词匹配游戏**
 elif st.session_state.page == "stage1":
     st.markdown("<h2 style='text-align: center;'>第一关</h2>", unsafe_allow_html=True)
     
-    cvc_words = ["mat", "cut", "kit", "tap", "lip", "tub", "cup", "sad", "jam", "pop", "hug"]
-    cvce_words = ["site", "huge", "mate", "cute", "pipe", "cube", "tape", "cub", "kite"]
+    cvc_words = ["mat", "cut", "kit", "tap", "lip", "tub", "cup", "sad", "cub", "jam", "pop", "hug"]
+    cvce_words = ["site", "huge", "mate", "cute", "pipe", "cube", "tape", "kite"]
+    com_words = ["cute", "pipe", "mat", "cut", "site", "huge", "kit", "mate", "tap", "lip", "tub", "kite", "cup", "cube", "cub", "sad", "jam", "pop", "tape", "hug"]
 
-    st.write("请把单词拖入正确的篮子里：")
+    st.write("请选择对应的单词：")
     
-    cvc_selected = st.multiselect("选择属于 CVC 结构的单词：", cvc_words + cvce_words)
-    cvce_selected = st.multiselect("选择属于 CVCe 结构的单词：", cvc_words + cvce_words)
+    cvc_selected = st.multiselect("选择属于 CVC 结构的单词：", com_words)
+    cvce_selected = st.multiselect("选择属于 CVCe 结构的单词：", com_words)
     
     if st.button("提交答案"):
         correct_cvc = set(cvc_selected) == set(cvc_words)
@@ -46,7 +47,7 @@ elif st.session_state.page == "stage1":
             st.success("🎉 全部正确！进入下一关！")
             time.sleep(1.5)
             st.session_state.page = "stage2"
-            st.experimental_rerun()
+            st.rerun()
         else:
             st.error("❌ 有错误，请检查后再提交！")
 
@@ -57,7 +58,7 @@ elif st.session_state.page == "stage2":
     word_list = {
         "hen": "🐔", "nut": "🥜", "rug": "🧶", "gum": "🍬", "mud": "🌧️", 
         "wig": "👩", "lip": "👄", "lid": "🛢️", "vet": "🐶", "fox": "🦊", 
-        "pot": "🍲", "log": "🌲", "cut": "✂️", "hug": "🤗", "bin": "🗑️"
+        "pot": "🍲", "log": "🪵", "cut": "✂️", "hug": "🤗", "bin": "🗑️"
     }
     
     words = list(word_list.keys())
@@ -80,10 +81,10 @@ elif st.session_state.page == "stage2":
         
         if st.session_state.word_index < len(words) - 1:
             st.session_state.word_index += 1
-            st.experimental_rerun()
+            st.rerun()
         else:
             st.session_state.page = "finish"
-            st.experimental_rerun()
+            st.rerun()
 
 # **最后一关：完成界面**
 elif st.session_state.page == "finish":
@@ -99,4 +100,4 @@ elif st.session_state.page == "finish":
         st.session_state.correct_count = 0
         st.session_state.wrong_count = 0
         st.session_state.word_index = 0
-        st.experimental_rerun()
+        st.rerun()
